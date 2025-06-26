@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_DB: videodb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: artikunutma1
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  videoprocessor:
+    build: .
+    container_name: videoprocessor
+    working_dir: /app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rabbitmq
+      - postgres
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/videodb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: artikunutma1
+    volumes:
+      - C:/Users/DOGUKAN/Desktop/videoproccesor/videoproccesor/uploads:/app/uploads
+      - C:/Users/DOGUKAN/Desktop/videoproccesor/videoproccesor/processed:/app/processed
+      - C:/Users/DOGUKAN/Desktop/videoproccesor/videoproccesor/thumbnails:/app/thumbnails
+
+volumes:
+  rabbitmq_data:
+  postgres_data:
