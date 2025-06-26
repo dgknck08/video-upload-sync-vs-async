@@ -3,11 +3,12 @@ package com.example.videoproccesor;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class VideoproccesorApplicationTests {
+import com.example.videoprocessor.VideoproccesorApplication;
 
-	@Test
-	void contextLoads() {
-	}
-
+@SpringBootTest(classes = VideoproccesorApplication.class)
+public class VideoproccesorApplicationTests {
+    @Test
+    void contextLoads() {
+    }
 }
+

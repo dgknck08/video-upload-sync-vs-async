@@ -1,4 +1,4 @@
-package com.example.videoproccesor;
+package com.example.videoprocessor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
